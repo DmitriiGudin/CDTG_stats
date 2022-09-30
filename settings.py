@@ -7,7 +7,7 @@ min_cluster_size = 3
 biweight_estimator_min_cluster_size = 4
 
 # Number of Monte-Carlo samples to simulate.
-N_MC_samples = 1000
+N_MC_samples = 2500000
 
 # List of binomial thresholds to use when calculating binomial probabilities, in ascending order.
 binom_thresholds = [0.25, 0.33, 0.5]
