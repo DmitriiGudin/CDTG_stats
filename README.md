@@ -38,6 +38,3 @@ Files *binom.txt* and *binom_table.tex* will be created in the folder.
 
 ## Program parameters.
 The parameters of the program are set in two files. *settings.py* contains the procedural parameters (this is probably what you will want to edit), while *lib/structure.py* relates to structure of the data.
-
-
-## License and contact information.
