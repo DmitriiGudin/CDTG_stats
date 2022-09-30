@@ -25,6 +25,6 @@ No installation required: simply put all files into a folder, and voila!
 
 ## Procedure.
 1. Create a folder for your data in the data/ directory. For example, in Linux:
-'''bash
+```bash
 mkdir data/example
-'''
+```
