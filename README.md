@@ -19,11 +19,11 @@ This procedure takes in a full dataset and a list of groups formed from that dat
 The lower these values are, the more statistically significance the reduction in scale is, supporting the hypothesis on the similarity of origins of stars within groups.
 
 
-## Installation.
+## Installation
 No installation required: simply put all files into a folder, and voila!
 
 
-## Procedure.
+## Procedure
 1. Create a folder for your data in the data/ directory. For example, in Linux:
 ```bash
 mkdir data/example
@@ -36,5 +36,5 @@ python run.py example
 Files *binom.txt* and *binom_table.tex* will be created in the folder.
 
 
-## Program parameters.
+## Program parameters
 The parameters of the program are set in two files. *settings.py* contains the procedural parameters (this is probably what you will want to edit), while *lib/structure.py* relates to structure of the data.
