@@ -28,7 +28,7 @@ No installation required: simply put all files into a folder, and voila!
 ```bash
 mkdir data/example
 ```
-2. Put files *data.csv* and *CDTG.csv* in the created folder. The first file must contain a column of star names, a column of values for each abundance of interest, and a column of flags for the values to be excluded from analysis. The second file must contain a list of groups, each group listing star names on consequitive lines, with a \textit{text_CDTG_begin} cell at the beginning of each group, and with the \textit{text_CDTG_end} cell at the end of it (set these values in the *data/structure.py* file).
+2. Put files *data.csv* and *CDTG.csv* in the created folder. The first file must contain a column of star names, a column of values for each abundance of interest, and a column of flags for the values to be excluded from analysis. The second file must contain a list of groups, each group listing star names on consequitive lines, with a *text_CDTG_begin* cell at the beginning of each group, and with the *text_CDTG_end* cell at the end of it (set these values in the *data/structure.py* file).
 3. Run the procedure with *python run.py*, with the folder name as an attribute:
 ```python
 python run.py example
