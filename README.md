@@ -1,4 +1,4 @@
-## What is this and who is it for?
+## What is this?
 This is the latest version of the implementation of the statistical method used in the following astrophysics paper: Dmitrii Gudin et al 2021 ApJ 908 79 (https://iopscience.iop.org/article/10.3847/1538-4357/abd7ed/meta).
 
 The scientific question of interest is: giving a dataset and a set of subgroups in it, how much more similarity there is between the units within the groups, compared to the units between different groups? For instance, we may have a population of students grouped by the high school they are attending, and we may be interested in comparing the spread of grades within each school compared to the spread across the general population.
@@ -11,4 +11,9 @@ Having those $p$-values, we can ask: how many of those value lay below, say, the
 
 This procedure takes in a full dataset and a list of groups formed from that dataset (the groups must not have intersections; not all dataset elements have to be featured in any of the groups). It outputs a \*.txt and a TeX table files listing the following probabilities:
 
-* *Individual Element Abundance Dispersion (IEAD) probability*: the measure of significance of reduction in scale for the given abundance and a given set $p$-value.
+* *Individual Elemental Abundance Dispersion (IEAD) probability*: the measure of significance of reduction in scale for the given abundance and a given $p$-value.
+* *Global Elemental Abundance Dispersion (GEAD) probability*: the measure of overall significance of reduction in scale for the given abundance.
+* *Full Elemental Abundance Dispersion (FEAD) probability*: the measure of overall significance of reduction in scale for a given $p$-value.
+* *Overall Elemental Abundance Dispersion (OEAD) probability*: the overall significance of results.
+
+The lower these values are, the more statistically significance the reduction in scale is, supporting the hypothesis on the similarity of origins of stars within groups.
