@@ -17,3 +17,14 @@ This procedure takes in a full dataset and a list of groups formed from that dat
 * *Overall Elemental Abundance Dispersion (OEAD) probability*: the overall significance of results.
 
 The lower these values are, the more statistically significance the reduction in scale is, supporting the hypothesis on the similarity of origins of stars within groups.
+
+
+## Installation.
+No installation required: simply put all files into a folder, and voila!
+
+
+## Procedure.
+1. Create a folder for your data in the data/ directory. For example, in Linux:
+'''bash
+mkdir data/example
+'''
