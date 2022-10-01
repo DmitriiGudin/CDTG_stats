@@ -13,6 +13,13 @@ import structure
     
 if __name__ == "__main__":
     
-    lib.preprocess_data(sys.argv[1])
-    lib.gen_dispersion_distribs(sys.argv[1])
-    lib.run_binom_analysis(sys.argv[1])
+    if sys.argv[1] == '--all':
+        dataset_list = os.listdir('data')
+    else:
+        dataset_list = sys.argv[1:]
+    
+    for d in dataset_list:
+        print ("Working on dataset " + d + "...")
+        lib.preprocess_data(d)
+        lib.gen_dispersion_distribs(d)
+        lib.run_binom_analysis(d)

@@ -17,6 +17,8 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import settings
 import structure
+import output
+from utils import prob, remove_dict_list_NaNs
 
 
 
@@ -55,10 +57,10 @@ def preprocess_data(dataset_name, data_file=structure.dataset_csv_file, CDTGs_fi
     star_names = []
     is_Reading = False
     for v in vals:
-        if v!='avg:':
+        if v!=structure.text_CDTG_end:
             if is_Reading:
                 star_names.append(v)
-            if v=='NAME':
+            if v==structure.text_CDTG_begin:
                 star_names = []
                 is_Reading = True
         else:
@@ -248,11 +250,7 @@ def run_binom_analysis(dataset_name):
     pickle_file = 'data/'+dataset_name+'/'+structure.pickle_file
     file = open(pickle_file, 'rb')
     data = pickle.load(file)
-    CDFs = data['CDFs']
-    for k in CDFs.keys():
-        cdf = np.array(CDFs[k])
-        cdf = cdf[~np.isnan(cdf)]
-        CDFs[k] = list(cdf)
+    CDFs = remove_dict_list_NaNs(data['CDFs'])
         
     # Load other pickle data to save back later.
     dataset = data['dataset']
@@ -262,13 +260,13 @@ def run_binom_analysis(dataset_name):
         
     # Built dictionaries for numbers below, IEAD, GEAD and FEAD probabilities. Calculate the OEAD probability.
     print ('Calculating the numbers below the alpha levels...')
-    num_dict = {k : {a : len(np.array(CDFs[k])[np.array(CDFs[k])<=a]) for a in settings.binom_thresholds+[1]} for k in structure.abundances.keys()}
+    num_dict = {k : {a : len(np.array(CDFs[k])[np.array(CDFs[k])<=a]) for a in settings.binom_thresholds+[1]} for k in structure.binom_abundances}
     print ('Calculating the IEAD probabilities...')
-    IEAD_dict = {k : {a : get_IEAD(CDFs[k], a) for a in settings.binom_thresholds} for k in structure.abundances.keys()}   
+    IEAD_dict = {k : {a : get_IEAD(CDFs[k], a) for a in settings.binom_thresholds} for k in structure.binom_abundances}   
     print ('Calculating the GEAD probabilities...')
-    GEAD_dict = {k : get_GEAD(CDFs[k], settings.binom_thresholds) for k in structure.abundances.keys()}
+    GEAD_dict = {k : get_GEAD(CDFs[k], settings.binom_thresholds) for k in structure.binom_abundances}
     print ('Calculating the FEAD probabilities...')
-    FEAD_dict = {a : get_FEAD([CDFs[k] for k in CDFs.keys()], a) for a in settings.binom_thresholds}
+    FEAD_dict = {a : get_FEAD([CDFs[k] for k in structure.binom_abundances], a) for a in settings.binom_thresholds}
     print ('Calculating the OEAD probability...')
     OEAD = get_OEAD([CDFs[k] for k in CDFs.keys()], settings.binom_thresholds)
     prob_dict = {'num_dict': num_dict, 'IEAD_dict' : IEAD_dict, 'GEAD_dict' : GEAD_dict, 'FEAD_dict' : FEAD_dict, 'OEAD' : OEAD}
@@ -278,25 +276,5 @@ def run_binom_analysis(dataset_name):
     pickle.dump({'dataset':dataset, 'CDTGs':CDTGs_df, 'CDFs':CDF_dict, 'binom_probs':prob_dict}, file)
     file.close()    
     
-    
-    # Print the probabilities
-    print ('Numbers:')
-    for k in num_dict.keys():
-        print ({k : num_dict[k]})
-        
-    print ('')
-    print ('IEAD probabilities:')
-    for k in IEAD_dict.keys():
-        print ({k : {l : prob(IEAD_dict[k][l],settings.binom_prec[0]) for l in IEAD_dict[k].keys()}})
-        
-    print ('')
-    print ('GEAD probabilities:')
-    for k in GEAD_dict.keys():
-        print ({k : prob(GEAD_dict[k],settings.binom_prec[0])})
-        
-    print ('FEAD probabilities:')
-    for k in FEAD_dict.keys():
-        print ({k : prob(FEAD_dict[k],settings.binom_prec[1])})
-        
-    print ('OEAD probability:')
-    print (prob(OEAD,settings.binom_prec[2]))
+    # Produce the LaTeX table.
+    output.get_binom_tex_table(num_dict, IEAD_dict, GEAD_dict, FEAD_dict, OEAD, dataset_name)
