@@ -269,6 +269,12 @@ def run_binom_analysis(dataset_name):
     FEAD_dict = {a : get_FEAD([CDFs[k] for k in structure.binom_abundances], a) for a in settings.binom_thresholds}
     print ('Calculating the OEAD probability...')
     OEAD = get_OEAD([CDFs[k] for k in CDFs.keys()], settings.binom_thresholds)
+    
+    # Reorder the entries in the dictionaries as per settings.py.
+    if settings.reverse_binom_threshold_order:
+        num_dict = {k : {a : num_dict[k][a] for a in list(reversed(list(num_dict[k].keys())[:-1])) + [list(num_dict[k].keys())[-1]] } for k in num_dict.keys()}
+        IEAD_dict = {k : {a : IEAD_dict[k][a] for a in reversed(list(IEAD_dict[k].keys()))} for k in IEAD_dict.keys()}
+        FEAD_dict = {a : FEAD_dict[a] for a in reversed(list(FEAD_dict.keys()))}
     prob_dict = {'num_dict': num_dict, 'IEAD_dict' : IEAD_dict, 'GEAD_dict' : GEAD_dict, 'FEAD_dict' : FEAD_dict, 'OEAD' : OEAD}
     
     # Write the resulting probabilities into the pickle file.

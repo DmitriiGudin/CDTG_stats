@@ -37,14 +37,15 @@ def get_binom_tex_table(num_dict, IEAD_dict, GEAD_dict, FEAD_dict, OEAD, dataset
             else:
                 return str(N)
         
-    # Retrieve numbers and IEAD, GEAD, FEAD, OEAD probabilities from the dictionary.    
+    # Order the binomial thresholds properly for display, as per settings.py.
+    binom_thresholds = list(reversed(settings.binom_thresholds)) if settings.reverse_binom_threshold_order else settings.binom_thresholds[:]
         
     # Generate the table LaTeX code.
     f = open('data/'+dataset_name+'/'+structure.binom_table_file,'w')
     f.write('\\begin{deluxetable*}{cccccc}[!]\n')
     f.write('\\tabletypesize{\\footnotesize}\n')
     f.write('\\tablecaption{CDTG Elemental-Abundance Statistics\\label{tab:binomial_probability_'+dataset_name+'}}\n')
-    alpha_list = ''.join(['$'+str(a)+'$, ' for a in settings.binom_thresholds])[1:-2]
+    alpha_list = ''.join(['$'+str(a)+'$, ' for a in binom_thresholds])[1:-2]
     f.write('\\tablehead{\\colhead{Abundance} & \\colhead{$\\#$ CDTGs} & \\colhead{$  N < ' + alpha_list + '} & \\colhead{IEAD Probabilities} & \\colhead{GEAD Probabilities} & \\colhead{OEAD Probability}}\n')
     f.write('\\startdata\n')
     for i, k in enumerate(structure.binom_abundances):
@@ -58,15 +59,15 @@ def get_binom_tex_table(num_dict, IEAD_dict, GEAD_dict, FEAD_dict, OEAD, dataset
         string = string + num_list + percentage_list  +'\n'
         f.write(string)
     f.write('\\hline\n')
-    percentage_list = ''.join(['$'+prob(FEAD_dict[k],settings.binom_prec[1],LaTeX=True)+'$, ' for k in settings.binom_thresholds])[:-2]
+    percentage_list = ''.join(['$'+prob(FEAD_dict[k],settings.binom_prec[1],LaTeX=True)+'$, ' for k in binom_thresholds])[:-2]
     f.write('\\multicolumn{2}{c}{FEAD Probabilities} & & '+percentage_list+' & &\n')
     f.write('\\enddata\n')
     if len(structure.binom_abundances) == 1:
-        alpha_list = 'level $v$ = ' + str(settings.binom_thresholds[0])
+        alpha_list = 'level $v$ = ' + str(binom_thresholds[0])
     elif len(structure.binom_abundances) == 2:
-        alpha_list = 'levels $v$ = ' + str(settings.binom_thresholds[0]) + ' and ' + str(settings.binom_thresholds[1]) + ', respectively'
+        alpha_list = 'levels $v$ = ' + str(binom_thresholds[0]) + ' and ' + str(binom_thresholds[1]) + ', respectively'
     else:
-        alpha_list = ''.join([str(a)+', ' for a in settings.binom_thresholds[:-1]]) + 'and ' + str(settings.binom_thresholds[-1]) + ', respectively'
+        alpha_list = ''.join([str(a)+', ' for a in binom_thresholds[:-1]]) + 'and ' + str(binom_thresholds[-1]) + ', respectively'
     f.write('\\tablecomments{The Individual Elemental-Abundance Dispersion (IEAD) probabilities represent the binomial probabilities for each element for the ' + alpha_list + '. The Full Elemental-Abundance Dispersion (FEAD) probabilities represent the probabilities (across {\\it all} elements) for the ' + alpha_list + '. The Global Elemental-Abundance Dispersion (GEAD) probabilities represent the probabilities for the triplet of CDF levels for each element. The Overall Elemental-Abundance Dispersion (OEAD) probability represents the probability (across {\\it all} elements) resulting from random draws from the full CDF.  See text for details.}\n')
     f.write('\\end{deluxetable*}')
     f.close()

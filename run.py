@@ -14,7 +14,7 @@ import structure
 if __name__ == "__main__":
     
     if sys.argv[1] == '--all':
-        dataset_list = os.listdir('data')
+        dataset_list = [d for d in os.listdir('data') if d[0]!='.']
     else:
         dataset_list = sys.argv[1:]
     

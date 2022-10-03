@@ -7,10 +7,13 @@ min_cluster_size = 3
 biweight_estimator_min_cluster_size = 4
 
 # Number of Monte-Carlo samples to simulate.
-N_MC_samples = 1000
+N_MC_samples = 10000
 
 # List of binomial thresholds to use when calculating binomial probabilities, in ascending order.
 binom_thresholds = [0.25, 0.33, 0.5]
+
+# If True, then the order in which the binomial thresholds are displayed is reversed. Affects the IEAD and FEAD probabilities, as well as the numbers of CDTGs below the thresholds.
+reverse_binom_threshold_order = True
 
 # Number of significant digits in percentages for reported binomial probabilities. 3 numbers: IEAD/GEAD, FEAD, and OEAD probabilities.
 binom_prec = [1, 2, 5]
