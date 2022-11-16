@@ -84,7 +84,7 @@ def preprocess_data(dataset_name, data_file=structure.dataset_csv_file, CDTGs_fi
                     locations[k+'_location'] = biweight_location(abundances)
                 else:
                     scales[k+'_scale'] = np.std(abundances)
-                    locations[k+'location'] = np.mean(abundances)
+                    locations[k+'_location'] = np.mean(abundances)
             else:
                 scales[k+'_scale'] = np.nan 
                 locations[k+'_location'] = np.nan
@@ -105,7 +105,7 @@ def preprocess_data(dataset_name, data_file=structure.dataset_csv_file, CDTGs_fi
 # Generates N_MC Monte Carlo samples of subsets of fixed length of the specified abundance array and calculates the scale measure of each. Returns the array of scale values. Works in parallel.
 def gen_scale_distrib(abundance_array, abundance_subset_len, N_MC=1000):
     
-    # First remove all NaNs. Then convert the array of abundances into a list (otherwise the random.choice() function will not work).
+    # First remove all NaNs. Then convert the array of abundances into a list (otherwise the random.sample() function will not work).
     abundance_array = abundance_array[~np.isnan(abundance_array)]
     abundance_array = list(abundance_array)
     
