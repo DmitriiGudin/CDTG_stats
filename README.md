@@ -1,7 +1,7 @@
 ## What is this?
 This is the latest version of the implementation of the statistical method used in the following astrophysics paper: Dmitrii Gudin et al 2021 ApJ 908 79 (https://iopscience.iop.org/article/10.3847/1538-4357/abd7ed/meta).
 
-The scientific question of interest is: giving a dataset and a set of subgroups in it, how much more similarity there is between the units within the groups, compared to the units between different groups? For instance, we may have a population of students grouped by the high school they are attending, and we may be interested in comparing the spread of grades within each school compared to the spread across the general population.
+The scientific question of interest is: given a dataset and a set of subgroups in it, how much more similarity is there between the units within the groups, compared to the units between different groups? For instance, we may have a population of students grouped by the high school they are attending, and we may be interested in comparing the spread of grades within each school compared to the spread across the general population.
 
 In the paper linked above, a dataset of chemically peculiar stars in the Milky Way was subjected to this question. The hypothesis was that the stars with enhanced amounts of heavy chemical elements were born in a set of environments with similar astrophysical events responsible for that enrichment. The stars were put into groups based on the similarity between their orbits around the Milky Way, and the expectation was that the stars within groups, having preferentially come from the same environments, would exhibit reduced spread of most chemical abundances.
 
@@ -16,7 +16,7 @@ This procedure takes in a full dataset and a list of groups formed from that dat
 * *Full Elemental Abundance Dispersion (FEAD) probability*: the measure of overall significance of reduction in scale for a given $p$-value.
 * *Overall Elemental Abundance Dispersion (OEAD) probability*: the overall significance of results.
 
-The lower these values are, the more statistically significance the reduction in scale is, supporting the hypothesis on the similarity of origins of stars within groups.
+The lower these values are, the more statistically significant the reduction in scale is, supporting the hypothesis on the similarity of origins of stars within groups.
 
 
 ## Installation
