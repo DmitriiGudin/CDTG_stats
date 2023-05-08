@@ -34,6 +34,7 @@ def preprocess_data(dataset_name, data_file=structure.dataset_csv_file, CDTGs_fi
     
     # Get the dataset as Pandas data frame.
     dataset = pd.read_csv(data_file, encoding='utf8', delimiter=',', index_col=structure.name_column, usecols=dataset_columns)
+    dataset.index = dataset.index.map(str)
     
     # Cast data types properly. Replace missing values with NaNs.
     for c in dataset_columns:
